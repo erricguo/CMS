@@ -1,4 +1,4 @@
-﻿var MainApp = angular.module('MainApp', ['ngRoute']);
+﻿var MainApp = angular.module('MainApp', ['ngRoute','ui.bootstrap']);
                                     
 MainApp.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
     var viewbase = '/App/';
