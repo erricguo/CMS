@@ -8,16 +8,19 @@ using CMS.Domain;
 using CMS.DAL.Repositiry;
 using CMS.Domain.ViewModel;
 using AutoMapper;
+using System.Transactions;
 
 namespace CMS.BLL.Services
 {
     public class CustomerService
     {
         private IRepository<Customers> db;
+        private IRepository<Orders> dbOrders;
 
         public CustomerService()
         {
             db = new GenericRepository<Customers>();
+            dbOrders = new GenericRepository<Orders>();
         }
 
         // <summary>取得所有客戶資料(分頁)</summary>
@@ -60,13 +63,13 @@ namespace CMS.BLL.Services
         /// <summary>取得客戶資訊</summary>
         /// <param name="CustomerID"></param>
         /// <returns></returns>
-        public IQueryable<CustomerViewModel> Get(string CustomerID , out int TotalRow)
+        public CustomerViewModel Get(string CustomerID)
         {
-            var DbResult = db.Get().Where(c => c.CustomerID.Trim() == CustomerID.Trim()).ToList();
-            TotalRow = DbResult.Count();
+            var DbResult = db.Get().Where(c => c.CustomerID.Trim() == CustomerID.Trim()).FirstOrDefault();
+            //TotalRow = DbResult.Count();
             Mapper.Reset();
             Mapper.Initialize(cfg => cfg.CreateMap<Customers, CustomerViewModel>());
-            return Mapper.Map<List<Customers>, List<CustomerViewModel>>(DbResult).AsQueryable();
+            return Mapper.Map<Customers, CustomerViewModel>(DbResult);
             //return Mapper.Map<Customers, CustomerViewModel>(DbResult);
         }
 
@@ -89,8 +92,24 @@ namespace CMS.BLL.Services
 
         public void DeleteCustomer(string CustomerID)
         {
-            var cust = db.GetByID(CustomerID);
-            db.Delete(cust);            
+            //先不處理，關係到關連資料表 FK_order_details_order
+            using (TransactionScope transaction = new TransactionScope())
+            {
+                var orderData = dbOrders.Get().Where(c => c.CustomerID.Trim() == CustomerID.Trim()).ToList();
+
+                foreach (Orders Repo in orderData)
+                {
+                    dbOrders.Delete(Repo);
+                }
+
+                var cust = db.GetByID(CustomerID);
+                db.Delete(cust);
+
+                transaction.Complete();
+            }
+                
+
+                     
         }
     }
 }

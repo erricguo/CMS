@@ -20,7 +20,8 @@ namespace CMS.Web
                       "~/Scripts/bootstrap.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
+                      //"~/Content/bootstrap.css",
+                      "~/Content/bootstrap.min_Darkly.css",
                       "~/Content/site.css"));
         }
     }

@@ -1,5 +1,4 @@
 ﻿
-
 MainApp.controller('CustCtrl', function ($scope, $location, $routeParams, $route, CustService) {
     $scope.IsLoad = true;
 
@@ -9,7 +8,7 @@ MainApp.controller('CustCtrl', function ($scope, $location, $routeParams, $route
     $scope.currentPage = 1; // 初始值，第一頁
 
     $scope.pageChanged = function () {
-        $scope.IsLoad = true;
+        //$scope.IsLoad = true;
         GetData();
     }
     var GetList = function () {
@@ -36,8 +35,7 @@ MainApp.controller('CustCtrl', function ($scope, $location, $routeParams, $route
 
     var GetCustomer = function () {
         CustService.getCustomer($routeParams.id).then(function (response) {
-            $scope.totalRecords = response.data.Total;
-            $scope.Customers = response.data.Data;
+            $scope.Customers = response.data;
             $scope.IsLoad = false;
         }, function () {
             $scope.error = "取得資料錯誤!";
@@ -45,6 +43,15 @@ MainApp.controller('CustCtrl', function ($scope, $location, $routeParams, $route
         })
     }
 
+    $scope.Delete = function (Cust) {
+        CustService.DeleteCustomer(Cust.CustomerID).then(function (response) {
+            alert("更新成功！");
+            $scope.IsLoad = false;
+        }, function (response) {
+            alert("更新失敗！");
+            $scope.IsLoad = false; //讀取完畢,隱藏loading圖示
+        });
+    }
 
-    GetCustomer();
+    GetData();
 });

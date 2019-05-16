@@ -7,14 +7,14 @@ MainApp.config(['$routeProvider', '$locationProvider', function ($routeProvider,
             controller: 'CustCtrl',
             templateUrl: viewbase + 'CustomerApp/List.html'
         })
-        /*.when('/Customer/Add', {
+        .when('/Customer/Add', {
             controller: 'CustAddCtrl',
             templateUrl: viewbase + 'CustomerApp/AddCustomer.html'
         })
-        .when('/CustCtrl/Edit/:id', {
+        .when('/Customer/Edit/:id', {
             controller: 'CustEditCtrl',
             templateUrl: viewbase + 'CustomerApp/EditCustomer.html'
-        })*/
+        })
 
     $locationProvider.html5Mode({
         enabled: true,

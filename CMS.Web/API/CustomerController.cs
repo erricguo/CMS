@@ -19,18 +19,26 @@ namespace CMS.Web.API
         }
         
         [HttpGet]
+        public HttpResponseMessage Customer()
+        {
+            try
+            {
+                var datas = service.Get();
+                return Request.CreateResponse(HttpStatusCode.OK, datas);
+            }
+            catch (System.Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message);
+            }
+        }
+
+        [HttpGet]
         public HttpResponseMessage Customer(string CustomerID)
         {
             try
             {
-                int TotalRow = 0;
-                object datas = null;
-                if (!string.IsNullOrEmpty(CustomerID))                
-                    datas = service.Get(CustomerID,out TotalRow);                
-                else
-                    datas = service.Get();
-                var Result = new { Total = TotalRow, Data = datas };
-                return Request.CreateResponse(HttpStatusCode.OK, Result);
+                var datas = service.Get(CustomerID);
+                return Request.CreateResponse(HttpStatusCode.OK, datas);
             }
             catch (System.Exception ex)
             {
@@ -95,11 +103,12 @@ namespace CMS.Web.API
             }
         }
 
-        public HttpResponseMessage Delete(int id)
+        public HttpResponseMessage Delete(string CustomerID)
         {
             try
             {
-                service.DeleteCustomer(id.ToString());
+
+                service.DeleteCustomer(CustomerID);
                 return Request.CreateResponse(HttpStatusCode.OK);
             }
             catch (System.Exception ex)

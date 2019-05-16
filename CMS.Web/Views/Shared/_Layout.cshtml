@@ -12,17 +12,19 @@
 </head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar navbar-default navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <a href="../" class="navbar-brand">客戶管理系統</a>
+                <!--<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">-->
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-main">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("應用程式名稱", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @*@Html.ActionLink("應用程式名稱", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
             </div>
-            <div class="navbar-collapse collapse">
+            <div class="navbar-collapse collapse" id="navbar-main">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("首頁", "Index", "Home", new { area = "" }, null)</li>
                     <li><a href="/Customer">客戶管理</a></li>
@@ -51,6 +53,7 @@
     <script src="~/App/app.js"></script>
     <script src="~/App/CustomerApp/customerServices.js"></script>
     <script src="~/App/CustomerApp/customerController.js"></script>
+    <script src="~/App/CustomerApp/customerEditController.js"></script>
 
 </body>
 </html>
