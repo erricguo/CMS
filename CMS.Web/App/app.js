@@ -15,6 +15,10 @@ MainApp.config(['$routeProvider', '$locationProvider', function ($routeProvider,
             controller: 'CustEditCtrl',
             templateUrl: viewbase + 'CustomerApp/EditCustomer.html'
         })
+        .otherwise({
+            controller: 'DashBoardCtrl',
+            templateUrl: viewbase + 'DashBoardApp/Index.html'
+        })
 
     $locationProvider.html5Mode({
         enabled: true,

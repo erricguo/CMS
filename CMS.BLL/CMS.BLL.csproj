@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\CustomerService.cs" />
+    <Compile Include="Services\DashBoardServices.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -23,6 +23,13 @@ MainApp.factory('CustService', function ($http, $q) {
                 .catch(deferred.reject);
             return deferred.promise
         },
+        AddData: function (Customer) {
+            var deferred = $q.defer();
+            $http.post('/api/Customer', Customer)
+                .then(deferred.resolve)
+                .catch(deferred.reject);
+            return deferred.promise
+        },
         Update: function (Customer) {
             var deferred = $q.defer();
             $http.put('/api/Customer', Customer)

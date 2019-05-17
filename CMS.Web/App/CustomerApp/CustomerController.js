@@ -43,12 +43,18 @@ MainApp.controller('CustCtrl', function ($scope, $location, $routeParams, $route
         })
     }
 
+    $scope.Update = function (id) {
+        $location.path('/Customer/Edit/' + id);
+    }
+
     $scope.Delete = function (Cust) {
-        CustService.DeleteCustomer(Cust.CustomerID).then(function (response) {
-            alert("更新成功！");
+        CustService.DeleteCustomer(Cust.CustomerID).then(function () {
+            alert("刪除成功！");
+            $scope.currentPage = 1;
+            GetData();
             $scope.IsLoad = false;
-        }, function (response) {
-            alert("更新失敗！");
+        }, function () {
+            alert("刪除失敗！");
             $scope.IsLoad = false; //讀取完畢,隱藏loading圖示
         });
     }
